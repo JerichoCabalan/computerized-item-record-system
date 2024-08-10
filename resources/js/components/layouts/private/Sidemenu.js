@@ -78,102 +78,60 @@ export default function Sidemenu(props) {
     };
 
     const handleMenuRender = () => {
-        let items = [];
-
-        menuItems.forEach((item, index) => {
-            if (item.children && item.children.length > 0) {
-                let children_list = [];
-
-                item.children.forEach((item2) => {
+        const renderMenu = (items) => {
+            return items.map((item) => {
+                if (item.children && item.children.length > 0) {
+                    return {
+                        key: item.path,
+                        icon: item.icon,
+                        label: item.title,
+                        children: renderMenu(item.children),
+                    };
+                } else {
                     let link = "";
 
-                    if (item2.targetNew === 1) {
+                    if (item.targetNew === 1) {
                         link = (
                             <Typography.Link
                                 target="new"
-                                href={window.location.origin + item2.path}
+                                href={window.location.origin + item.path}
                             >
-                                {item2.title ?? item2.permission}
+                                {item.title ?? item.permission}
                             </Typography.Link>
                         );
                     } else {
                         link = (
-                            <Link to={item2.path}>
-                                {item2.title ?? item2.permission}
+                            <Link
+                                onClick={() => {
+                                    setOpenKeys([]);
+                                }}
+                                to={item.path}
+                            >
+                                {item.title ?? item.permission}
                             </Link>
                         );
                     }
 
-                    // if (handleCheckPermission(item2.moduleCode)) {
-                    children_list.push({
-                        key: item2.path,
-                        className: activeSubRoute(item2.path),
+                    return {
+                        key: item.path,
+                        icon: item.icon,
                         label: link,
+                        className:
+                            activeRoute(item.path) +
+                            " " +
+                            (item.className ?? ""),
+                        id: item.id,
                         onClick: () => {
                             if (width < 768) {
                                 setSideMenuCollapse(true);
                             }
                         },
-                    });
-                    // }
-
-                    return "";
-                });
-
-                if (children_list.length > 0) {
-                    items.push({
-                        key: item.path,
-                        icon: item.icon,
-                        label: item.title,
-                        className: item.className ?? "",
-                        children: children_list,
-                    });
-                    return "";
+                    };
                 }
-            } else {
-                let link = "";
+            });
+        };
 
-                if (item.targetNew === 1) {
-                    link = (
-                        <Typography.Link
-                            target="new"
-                            href={window.location.origin + item.path}
-                        >
-                            {item.title ?? item.permission}
-                        </Typography.Link>
-                    );
-                } else {
-                    link = (
-                        <Link
-                            onClick={() => {
-                                setOpenKeys([]);
-                            }}
-                            to={item.path}
-                        >
-                            {item.title ?? item.permission}
-                        </Link>
-                    );
-                }
-
-                // if (handleCheckPermission(item.moduleCode)) {
-                items.push({
-                    key: item.path,
-                    icon: item.icon,
-                    label: link,
-                    className:
-                        activeRoute(item.path) + " " + (item.className ?? ""),
-                    id: item.id,
-                    onClick: () => {
-                        if (width < 768) {
-                            setSideMenuCollapse(true);
-                        }
-                    },
-                });
-                // }
-            }
-        });
-
-        return items;
+        return renderMenu(menuItems);
     };
 
     return (

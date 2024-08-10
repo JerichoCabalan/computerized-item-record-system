@@ -11,10 +11,7 @@ import PageLogin from "../views/public/PageLogin/PageLogin";
 
 import PageEditProfile from "../views/private/PageEditProfile/PageEditProfile";
 import PageDashboard from "../views/private/PageDashboard/PageDashboard";
-import PageUser from "../views/private/PageUser/PageUser";
-import PageUserForm from "../views/private/PageUser/PageUserForm";
-import PageUserPermission from "../views/private/PageUser/PageUserPermission";
-import PagePermission from "../views/private/PagePermission/PagePermission";
+import PageListItem from "../views/private/PageStorage/PageListItem";
 
 export default function RouteList() {
     return (
@@ -75,12 +72,12 @@ export default function RouteList() {
 
             {/* users */}
             <Route
-                path="/users/current"
+                path="storage/list-item"
                 element={
                     <PrivateRoute
                         // moduleCode="M-02"
-                        moduleName="User Current"
-                        title="Users"
+                        moduleName="Page Storage List Item"
+                        title="Storage List Item"
                         subtitle="VIEW / EDIT"
                         pageId="PageUserCurrent"
                         pageHeaderIcon={faUsers}
@@ -90,13 +87,13 @@ export default function RouteList() {
                                 link: "/dashboard",
                             },
                             {
-                                name: "Users",
+                                name: "Storage",
                             },
                             {
-                                name: "Current",
+                                name: "List Item",
                             },
                         ]}
-                        component={PageUser}
+                        component={PageListItem}
                     />
                 }
             />
@@ -128,7 +125,6 @@ export default function RouteList() {
                                 name: "Add User",
                             },
                         ]}
-                        component={PageUserForm}
                     />
                 }
             />
@@ -160,7 +156,6 @@ export default function RouteList() {
                                 name: "Edit User",
                             },
                         ]}
-                        component={PageUserForm}
                     />
                 }
             />
@@ -192,7 +187,6 @@ export default function RouteList() {
                                 name: "Edit Permission",
                             },
                         ]}
-                        component={PageUserPermission}
                     />
                 }
             />
@@ -219,7 +213,6 @@ export default function RouteList() {
                                 name: "Archived",
                             },
                         ]}
-                        component={PageUser}
                     />
                 }
             />
@@ -251,7 +244,6 @@ export default function RouteList() {
                                 name: "Edit User",
                             },
                         ]}
-                        component={PageUserForm}
                     />
                 }
             />
@@ -281,7 +273,6 @@ export default function RouteList() {
                                 name: "Permission",
                             },
                         ]}
-                        component={PagePermission}
                     />
                 }
             />
